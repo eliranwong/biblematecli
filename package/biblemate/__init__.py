@@ -252,9 +252,12 @@ AGENTMAKE_CONFIG = {
 }
 OLLAMA_NOT_FOUND = "`Ollama` is not found! BibleMate AI uses `Ollama` to generate embeddings for semantic searches. You may install it from https://ollama.com/ so that you can perform semantic searches of the Bible with BibleMate AI."
 BIBLEMATE_VERSION = readTextFile(os.path.join(os.path.dirname(os.path.realpath(__file__)), "version.txt"))
-BIBLEMATEDATA = os.path.join(AGENTMAKE_USER_DIR, "biblemate", "data")
-if not os.path.isdir(BIBLEMATEDATA):
-    Path(BIBLEMATEDATA).mkdir(parents=True, exist_ok=True)
+#BIBLEMATEDATA = os.path.join(AGENTMAKE_USER_DIR, "biblemate", "data")
+#if not os.path.isdir(BIBLEMATEDATA):
+#    Path(BIBLEMATEDATA).mkdir(parents=True, exist_ok=True)
+BIBLEMATEVECTORSTORE = os.path.join(os.path.expanduser("~"), "biblemate", "data", "vectors")
+if not os.path.isdir(BIBLEMATEVECTORSTORE):
+    Path(BIBLEMATEVECTORSTORE).mkdir(parents=True, exist_ok=True)
 BIBLEMATETEMP = os.path.join(os.path.dirname(os.path.realpath(__file__)), "temp")
 if not os.path.isdir(BIBLEMATETEMP):
     Path(BIBLEMATETEMP).mkdir(parents=True, exist_ok=True)

@@ -5,7 +5,7 @@ from fastmcp import FastMCP
 from fastmcp.prompts.prompt import PromptMessage, TextContent
 from agentmake import agentmake, DEVELOPER_MODE
 from agentmake.plugins.uba.lib.BibleParser import BibleVerseParser
-from biblemate import BIBLEMATE_VERSION, BIBLEMATEDATA, AGENTMAKE_CONFIG, config
+from biblemate import BIBLEMATE_VERSION, BIBLEMATEVECTORSTORE, AGENTMAKE_CONFIG, config
 from biblemate.api.bible import search_bible
 from biblemate.api.api import run_bm_api
 from biblemate.api.search import UBASearches
@@ -134,7 +134,7 @@ def dictionaries() -> dict:
     resources = json.loads(run_bm_api(".resources"))
     return dict(zip(resources["dictionaryListAbb"], resources["dictionaryList"]))
 
-dictionary_db = os.path.join(BIBLEMATEDATA, "dictionary.db")
+dictionary_db = os.path.join(BIBLEMATEVECTORSTORE, "dictionary.db")
 if os.path.isfile(dictionary_db):
     @mcp.resource("dictionary://{query}")
     def dictionary(query:str) -> Union[str, list]:
@@ -155,7 +155,7 @@ def encyclopedias() -> dict:
     resources = json.loads(run_bm_api(".resources"))
     return dict(zip(resources["encyclopediaListAbb"], resources["encyclopediaList"]))
 
-encyclopedia_db = os.path.join(BIBLEMATEDATA, "encyclopedia.db")
+encyclopedia_db = os.path.join(BIBLEMATEVECTORSTORE, "encyclopedia.db")
 if os.path.isfile(encyclopedia_db):
     @mcp.resource("encyclopedia://{module}/{query}")
     def encyclopedia(module: str, query:str) -> Union[str, list]:
@@ -203,7 +203,7 @@ def topics() -> dict:
     resources = json.loads(run_bm_api(".resources"))
     return dict(zip(resources["topicListAbb"], resources["topicList"]))
 
-collection_db = os.path.join(BIBLEMATEDATA, "collection.db")
+collection_db = os.path.join(BIBLEMATEVECTORSTORE, "collection.db")
 if os.path.isfile(collection_db):
     @mcp.resource("parallel://{module}/{query}")
     def parallel(module:str, query:str) -> Union[str, list]:
@@ -228,7 +228,7 @@ if os.path.isfile(collection_db):
             bible=module,
         )
 
-topic_db = os.path.join(BIBLEMATEDATA, "exlb.db")
+topic_db = os.path.join(BIBLEMATEVECTORSTORE, "exlb.db")
 if os.path.isfile(topic_db):
     @mcp.resource("topic://{query}")
     def topic(query:str) -> Union[str, list]:

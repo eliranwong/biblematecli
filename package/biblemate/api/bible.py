@@ -4,7 +4,7 @@ import json, os, re
 from agentmake import OllamaAI, OLLAMA_FOUND, OLLAMA_NOT_FOUND_MESSAGE, AGENTMAKE_USER_DIR, agentmake, getDictionaryOutput
 from agentmake.utils.rag import get_embeddings, cosine_similarity_matrix
 from prompt_toolkit.shortcuts import ProgressBar
-from biblemate import config, BIBLEMATEDATA
+from biblemate import config, BIBLEMATEVECTORSTORE
 from biblemate.api.api import run_bm_api
 from agentmake.plugins.uba.lib.BibleBooks import BibleBooks
 from agentmake.backends.ollama import OllamaAI
@@ -43,7 +43,7 @@ def search_bible(request:str, book:int=0, module=config.default_bible, search_re
     exact_matches_content = run_bm_api(f"literal:::{abbr[str(book)][0]},{module}:::{search_string}" if book else f"literal:::{module}:::{search_string}")
     
     # semantic matches
-    bible_file = os.path.join(BIBLEMATEDATA, "bible.db")
+    bible_file = os.path.join(BIBLEMATEVECTORSTORE, "bible.db")
     if not OLLAMA_FOUND:
         semantic_matches = []
         semantic_matches_content = f"[{OLLAMA_NOT_FOUND_MESSAGE}]"
@@ -86,7 +86,7 @@ class BibleVectorDatabase:
 
     def __init__(self, uba_bible_path: str=None):
         if not uba_bible_path:
-            uba_bible_path = os.path.join(BIBLEMATEDATA, "bible.db")
+            uba_bible_path = os.path.join(BIBLEMATEVECTORSTORE, "bible.db")
         # check if file exists
         if os.path.isfile(uba_bible_path):
             # Download embedding model

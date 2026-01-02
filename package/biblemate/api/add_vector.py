@@ -1,11 +1,11 @@
 import apsw, re, os, json
 from agentmake.utils.rag import get_embeddings
 from prompt_toolkit.shortcuts import ProgressBar
-from biblemate import config, BIBLEMATEDATA
+from biblemate import config, BIBLEMATEVECTORSTORE
 
 
 def add_vector_data(db_file="dictionary.db", table="Dictionary", h2=False):
-    db_file = os.path.join(BIBLEMATEDATA, db_file)
+    db_file = os.path.join(BIBLEMATEVECTORSTORE, db_file)
     if os.path.isfile(db_file):
         with apsw.Connection(db_file) as connection:
             cursor = connection.cursor()
@@ -31,7 +31,7 @@ def add_vector_data(db_file="dictionary.db", table="Dictionary", h2=False):
 
 def add_vector_names(create_table=True):
     from uniquebible.util.HBN import HBN
-    db_file = os.path.join(BIBLEMATEDATA, "exlb.db")
+    db_file = os.path.join(BIBLEMATEVECTORSTORE, "exlb.db")
     table = "exlbn"
     if os.path.isfile(db_file):
         with apsw.Connection(db_file) as connection:
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS {table} (
             #cursor.execute(f"VACUUM;")
 
 def fix_vector_collections(db_file="collection.db", table="PARALLEL"):
-    db_file = os.path.join(BIBLEMATEDATA, db_file)
+    db_file = os.path.join(BIBLEMATEVECTORSTORE, db_file)
     if os.path.isfile(db_file):
         with apsw.Connection(db_file) as connection:
             cursor = connection.cursor()
@@ -69,7 +69,7 @@ def fix_vector_collections(db_file="collection.db", table="PARALLEL"):
             #cursor.execute(f"VACUUM;")
 
 def add_vector_collections(db_file="collection.db", table="PROMISES", h2=False):
-    db_file = os.path.join(BIBLEMATEDATA, db_file)
+    db_file = os.path.join(BIBLEMATEVECTORSTORE, db_file)
     if os.path.isfile(db_file):
         with apsw.Connection(db_file) as connection:
             cursor = connection.cursor()
@@ -97,7 +97,7 @@ def add_vector_collections(db_file="collection.db", table="PROMISES", h2=False):
             #cursor.execute(f"VACUUM;")
 
 def add_vector_encyclopedias():
-    db_file = os.path.join(BIBLEMATEDATA, "encyclopedia.db")
+    db_file = os.path.join(BIBLEMATEVECTORSTORE, "encyclopedia.db")
     if os.path.isfile(db_file):
         with apsw.Connection(db_file) as connection:
             cursor = connection.cursor()

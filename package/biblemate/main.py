@@ -2,7 +2,7 @@ from biblemate.core.systems import *
 from biblemate.api.dialogs import *
 from biblemate.ui.text_area import getTextArea
 from biblemate.ui.info import get_banner
-from biblemate import config, CONFIG_FILE_BACKUP, DIALOGS, BIBLEMATE_VERSION, AGENTMAKE_CONFIG, BIBLEMATE_USER_DIR, BIBLEMATEDATA, fix_string, write_user_config, list_dir_content
+from biblemate import config, CONFIG_FILE_BACKUP, DIALOGS, BIBLEMATE_VERSION, AGENTMAKE_CONFIG, BIBLEMATE_USER_DIR, BIBLEMATEVECTORSTORE, fix_string, write_user_config, list_dir_content
 from biblemate.api.api import DEFAULT_MODULES, run_bm_api
 from pathlib import Path
 import urllib.parse
@@ -270,14 +270,14 @@ async def download_data(console, default=""):
         default=default,
     )
     if file_id:
-        output = os.path.join(BIBLEMATEDATA, file_id+".zip")
+        output = os.path.join(BIBLEMATEVECTORSTORE, file_id+".zip")
         if os.path.isfile(output):
             os.remove(output)
         if os.path.isfile(output[:-4]):
             os.remove(output[:-4])
         gdown.download(id=file_ids[file_id], output=output)
         with zipfile.ZipFile(output, 'r') as zip_ref:
-            zip_ref.extractall(BIBLEMATEDATA)
+            zip_ref.extractall(BIBLEMATEVECTORSTORE)
         if os.path.isfile(output):
             os.remove(output)
         info = "Restart to make the changes effective!"

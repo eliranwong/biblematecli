@@ -1,4 +1,4 @@
-# BibleMate AI
+# BibleMate AI CLI
 
 This repository focuses only on the CLI version and MCP server of a larger project, [BibleMate AI](https://github.com/eliranwong/biblemate).
 

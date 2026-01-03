@@ -1,5 +1,11 @@
 # BibleMate AI
 
+This repository focuses only on the CLI version and MCP server of a larger project, [BibleMate AI](https://github.com/eliranwong/biblemate).
+
+For Web UI / Http Server / API Server / Bible Data, read https://github.com/eliranwong/biblemate
+
+---
+
 **BibleMate AI** is a groundbreaking, autonomous AI agent designed to revolutionize your Bible study. It can create study plans, coordinate multiple Bible tools, and take multi-step actions to complete complex Bible-related tasks, such as conducting an in-depth study of a particular Bible passage.
 
 Website: https://biblemate.ai

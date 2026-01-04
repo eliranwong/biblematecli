@@ -57,7 +57,7 @@ if not sys.stdin.isatty():
 
 # write to the `config.py` file temporarily for the MCP server to pick it up
 config.backend = args.backend if args.backend else os.getenv("DEFAULT_AI_BACKEND") if os.getenv("DEFAULT_AI_BACKEND") else "googleai"
-config.model = args.model if args.model else os.getenv("DEFAULT_AI_MODEL") if os.getenv("DEFAULT_AI_MODEL") else "gemini-2.5-flash"
+config.model = args.model if args.model else "gemini-2.5-flash" if not args.backend and not os.getenv("DEFAULT_AI_BACKEND") else None
 with open(CONFIG_FILE_BACKUP, "a", encoding="utf-8") as fileObj:
     fileObj.write(f'''\nconfig.backend="{config.backend}"''')
     fileObj.write(f'''\nconfig.model="{config.model}"''')

@@ -1409,7 +1409,7 @@ def simple_bible_study(request:str) -> PromptMessage:
     """Perform a simple bible study task"""
     global PromptMessage, TextContent
     prompt_text = f"""You are a bible study agent. You check the user request, under the `User Request` section, and resolve it with the following steps in order:
-1. Call tool 'retrieve_english_bible_verses' or `retrieve_bible_chapter` for Bible text, 
+1. Call tool 'retrieve_bible_verses' or `retrieve_bible_chapter` for Bible text, 
 2. Call tool 'retrieve_bible_cross_references' for Bible cross-references, 
 3. Call tool 'study_old_testament_themes' for studying old testament themes or 'study_new_testament_themes' for studying new testament themes, and 
 4. Call tool 'write_bible_theology' to explain its theology.

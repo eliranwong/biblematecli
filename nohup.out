@@ -1,0 +1,38 @@
+[01/07/26 17:37:16] INFO     Starting MCP server 'BibleMate AI'   server.py:1966
+                             with transport 'stdio'                             
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/logging/config.py", line 560, in configure
+    formatters[name] = self.configure_formatter(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/logging/config.py", line 672, in configure_formatter
+    result = self.configure_custom(config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/logging/config.py", line 490, in configure_custom
+    result = c(**kwargs)
+             ^^^^^^^^^^^
+  File "/home/eliran/ai/lib/python3.12/site-packages/uvicorn/logging.py", line 42, in __init__
+    self.use_colors = sys.stdout.isatty()
+                      ^^^^^^^^^^^^^^^^^^^
+ValueError: I/O operation on closed file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/eliran/ai/bin/biblemateweb", line 3, in <module>
+    from biblemateweb.main import main
+  File "/home/eliran/ai/lib/python3.12/site-packages/biblemateweb/main.py", line 599, in <module>
+    main()
+  File "/home/eliran/ai/lib/python3.12/site-packages/biblemateweb/main.py", line 591, in main
+    ui.run(
+  File "/home/eliran/ai/lib/python3.12/site-packages/nicegui/ui_run.py", line 246, in run
+    config = CustomServerConfig(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/eliran/ai/lib/python3.12/site-packages/uvicorn/config.py", line 278, in __init__
+    self.configure_logging()
+  File "/home/eliran/ai/lib/python3.12/site-packages/uvicorn/config.py", line 370, in configure_logging
+    logging.config.dictConfig(self.log_config)
+  File "/usr/lib/python3.12/logging/config.py", line 914, in dictConfig
+    dictConfigClass(config).configure()
+  File "/usr/lib/python3.12/logging/config.py", line 563, in configure
+    raise ValueError('Unable to configure '
+ValueError: Unable to configure formatter 'default'

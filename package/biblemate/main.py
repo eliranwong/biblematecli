@@ -189,6 +189,8 @@ Get a static text-based response directly from a text-based AI model without usi
     templates = {r.name: (r.description, r.uriTemplate) for r in templates_raw}
     templates = dict(sorted(templates.items()))
     
+    #writeTextFile(os.path.join(BIBLEMATE_USER_DIR, "tools.py"), pprint.pformat(tools))
+    #writeTextFile(os.path.join(BIBLEMATE_USER_DIR, "tools_schema.py"), pprint.pformat(tools_schema))
     return tools, tools_schema, master_available_tools, available_tools, tool_descriptions, tool_descriptions_lite, prompts, prompts_schema, resources, templates
 
 def display_cancel_message(console, cancel_message="Cancelled!"):
@@ -1076,6 +1078,8 @@ Press `Ctrl+C` once or twice until the running process is cancelled, while you a
 
             # Tool selection systemm message
             system_tool_selection = get_system_tool_selection(available_tools, tool_descriptions_lite if config.light else tool_descriptions)
+            #writeTextFile(os.path.join(BIBLEMATE_USER_DIR, "system_tool_selection.md"), system_tool_selection)
+            #print(os.path.join(BIBLEMATE_USER_DIR, "system_tool_selection.md"))
 
             # auto tool selection in chat mode
             if config.agent_mode is None and config.auto_tool_selection and not user_request.startswith("@"):
@@ -1326,7 +1330,7 @@ Press `Ctrl+C` once or twice until the running process is cancelled, while you a
                         result = await client.get_prompt(specified_prompt[1:], structured_output)
                     #print(result, "\n\n")
                     master_plan = result.messages[0].content.text
-                    # display info# display info
+                    # display info
                     display_info(console, Markdown(user_request), title="User Request", border_style=get_border_style())
                     display_info(console, Markdown(master_plan), title="Master Plan", border_style=get_border_style())
                 else:

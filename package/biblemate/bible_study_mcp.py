@@ -1181,6 +1181,13 @@ def ask_bible_scholar(request:List[Dict[str, Any]]) -> str:
     return getResponse(messages)
 
 @mcp.tool
+def write_bible_perspectives(request:List[Dict[str, Any]]) -> str:
+    """Write biblical perspectives and principles in relation to the user content"""
+    global agentmake, getResponse, AGENTMAKE_CONFIG
+    messages = agentmake(request, **{'system': 'bible/perspective'}, **AGENTMAKE_CONFIG)
+    return getResponse(messages)
+
+@mcp.tool
 def explain_bible_meaning(request:List[Dict[str, Any]]) -> str:
     """Explain the meaning of the user-given content in reference to the Bible"""
     global agentmake, getResponse, AGENTMAKE_CONFIG
@@ -1297,13 +1304,6 @@ def write_bible_chapter_summary(request:List[Dict[str, Any]]) -> str:
     """Write a detailed interpretation on a bible chapter; a bible chapter must be given"""
     global agentmake, getResponse, AGENTMAKE_CONFIG
     messages = agentmake(request, **{'instruction': 'bible/chapter_summary', 'system': 'auto'}, **AGENTMAKE_CONFIG)
-    return getResponse(messages)
-
-@mcp.tool
-def write_bible_perspectives(request:List[Dict[str, Any]]) -> str:
-    """Write biblical perspectives and principles in relation to the user content"""
-    global agentmake, getResponse, AGENTMAKE_CONFIG
-    messages = agentmake(request, **{'system': 'bible/perspective'}, **AGENTMAKE_CONFIG)
     return getResponse(messages)
 
 @mcp.tool

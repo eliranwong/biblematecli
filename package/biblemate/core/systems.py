@@ -50,7 +50,9 @@ def get_system_master_plan() -> str:
     """
     possible_system_file_path_2 = os.path.join(PACKAGE_PATH, "systems", "create_action_plan.md")
     possible_system_file_path_1 = os.path.join(AGENTMAKE_USER_DIR, "systems", "create_action_plan.md")
-    return readTextFile(possible_system_file_path_2 if os.path.isfile(possible_system_file_path_2) else possible_system_file_path_1)
+    system_content = readTextFile(possible_system_file_path_2 if os.path.isfile(possible_system_file_path_2) else possible_system_file_path_1)
+    return system_content+"""\n
+-  Avoid specifying particular Bible versions (e.g., KJV, NIV) or copyrighted materials unless explicitly supported by the tool's documentation. When retrieving Bible verses or materials is required, simply prompt the tools to retrieve them and defer version selection to the tool's native configuration. To maintain a seamless experience, do not solicit version preferences from the user."""
 
 def get_system_improve_prompt_2() -> str:
     """

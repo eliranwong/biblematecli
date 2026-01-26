@@ -1,28 +1,53 @@
-from agentmake import USER_OS, AGENTMAKE_USER_DIR, readTextFile, writeTextFile
+from __future__ import annotations
+
+import os
+import shutil
+import pprint
+import warnings
 from pathlib import Path
+from typing import Dict, List
+
+from agentmake import USER_OS, AGENTMAKE_USER_DIR, readTextFile, writeTextFile
 from biblemate import config
 from biblemate.ui.selection_dialog import TerminalModeDialogs
-import os, shutil, pprint
-import warnings
 
-# Filter out the specific RuntimeWarning from the 'agentmake' module
+# ------------------------------------------------------------------------------
+# Warnings
+# ------------------------------------------------------------------------------
+
 warnings.filterwarnings(
-    "ignore", 
-    message="coroutine '.*' was never awaited", 
-    category=RuntimeWarning, 
-    module='agentmake'
+    "ignore",
+    message="coroutine '.*' was never awaited",
+    category=RuntimeWarning,
+    module="agentmake",
 )
 
-BIBLEMATE_USER_DIR = os.path.join(AGENTMAKE_USER_DIR, "biblemate")
-if not os.path.isdir(BIBLEMATE_USER_DIR):
-    Path(BIBLEMATE_USER_DIR).mkdir(parents=True, exist_ok=True)
-CONFIG_FILE_BACKUP = os.path.join(BIBLEMATE_USER_DIR, "biblemate.config")
+# ------------------------------------------------------------------------------
+# Paths
+# ------------------------------------------------------------------------------
 
-# NOTE: When add a config item, update both `write_user_config` and `default_config`
+USER_DIR = Path(AGENTMAKE_USER_DIR)
+BIBLEMATE_USER_DIR = USER_DIR / "biblemate"
+BIBLEMATE_USER_DIR.mkdir(parents=True, exist_ok=True)
 
-def write_user_config():
-    """Writes the current configuration to the user's config file."""
-    configurations = f"""config.banner_title="{config.banner_title}"
+CONFIG_FILE_BACKUP = BIBLEMATE_USER_DIR / "biblemate.config"
+
+BASE_DIR = Path(__file__).resolve().parent
+VERSION_FILE = BASE_DIR / "version.txt"
+TEMP_DIR = BASE_DIR / "temp"
+TEMP_DIR.mkdir(exist_ok=True)
+
+VECTORSTORE_DIR = Path.home() / "biblemate" / "data" / "vectors"
+VECTORSTORE_DIR.mkdir(parents=True, exist_ok=True)
+
+# ------------------------------------------------------------------------------
+# Config persistence
+# ------------------------------------------------------------------------------
+
+def write_user_config() -> None:
+    """Persist current config values to disk."""
+    content = f"""
+config.banner_title="{config.banner_title}"
 config.agent_mode={config.agent_mode}
 config.prompt_engineering={config.prompt_engineering}
 config.auto_suggestions={config.auto_suggestions}
@@ -45,11 +70,14 @@ config.color_partner_mode="{config.color_partner_mode}"
 config.color_info_border="{config.color_info_border}"
 config.embedding_model="{config.embedding_model}"
 config.custom_input_suggestions={pprint.pformat(config.custom_input_suggestions)}
-config.disabled_tools={pprint.pformat(config.disabled_tools)}"""
-    writeTextFile(CONFIG_FILE_BACKUP, configurations)
+config.disabled_tools={pprint.pformat(config.disabled_tools)}
+""".strip()
 
-# restore config backup after upgrade
-default_config = '''config.banner_title=""
+    writeTextFile(str(CONFIG_FILE_BACKUP), content)
+
+
+DEFAULT_CONFIG = """
+config.banner_title=""
 config.agent_mode=False
 config.prompt_engineering=False
 config.auto_suggestions=True
@@ -72,94 +100,41 @@ config.color_partner_mode="#8000AA"
 config.color_info_border="bright_blue"
 config.embedding_model="paraphrase-multilingual"
 config.custom_input_suggestions=[]
-config.disabled_tools=['search_1_chronicles_only',
-'search_1_corinthians_only',
-'search_1_john_only',
-'search_1_kings_only',
-'search_1_peter_only',
-'search_1_samuel_only',
-'search_1_thessalonians_only',
-'search_1_timothy_only',
-'search_2_chronicles_only',
-'search_2_corinthians_only',
-'search_2_john_only',
-'search_2_kings_only',
-'search_2_peter_only',
-'search_2_samuel_only',
-'search_2_thessalonians_only',
-'search_2_timothy_only',
-'search_3_john_only',
-'search_acts_only',
-'search_amos_only',
-'search_colossians_only',
-'search_daniel_only',
-'search_deuteronomy_only',
-'search_ecclesiastes_only',
-'search_ephesians_only',
-'search_esther_only',
-'search_exodus_only',
-'search_ezekiel_only',
-'search_ezra_only',
-'search_galatians_only',
-'search_genesis_only',
-'search_habakkuk_only',
-'search_haggai_only',
-'search_hebrews_only',
-'search_hosea_only',
-'search_isaiah_only',
-'search_james_only',
-'search_jeremiah_only',
-'search_job_only',
-'search_joel_only',
-'search_john_only',
-'search_jonah_only',
-'search_joshua_only',
-'search_jude_only',
-'search_judges_only',
-'search_lamentations_only',
-'search_leviticus_only',
-'search_luke_only',
-'search_malachi_only',
-'search_mark_only',
-'search_matthew_only',
-'search_micah_only',
-'search_nahum_only',
-'search_nehemiah_only',
-'search_numbers_only',
-'search_obadiah_only',
-'search_philemon_only',
-'search_philippians_only',
-'search_proverbs_only',
-'search_psalms_only',
-'search_revelation_only',
-'search_romans_only',
-'search_ruth_only',
-'search_song_of_songs_only',
-'search_titus_only',
-'search_zechariah_only',
-'search_zephaniah_only']'''
+config.disabled_tools=[]
+""".strip()
 
-def load_config():
-    """Loads the user's configuration from the config file."""
-    if not os.path.isfile(CONFIG_FILE_BACKUP):
-        exec(default_config, globals())
+
+def load_config() -> None:
+    """Load user configuration, apply defaults for new fields."""
+    if not CONFIG_FILE_BACKUP.exists():
+        exec(DEFAULT_CONFIG, globals())
         write_user_config()
     else:
-        exec(readTextFile(CONFIG_FILE_BACKUP), globals())
-    # check if new config items are added
+        exec(readTextFile(str(CONFIG_FILE_BACKUP)), globals())
+
     changed = False
-    for config_item in default_config[7:].split("\nconfig."):
-        key, _ = config_item.split("=", 1)
+    for line in DEFAULT_CONFIG.splitlines():
+        if not line.startswith("config."):
+            continue
+        key = line.split("=", 1)[0].replace("config.", "")
         if not hasattr(config, key):
-            exec(f"config.{config_item}", globals())
+            exec(line, globals())
             changed = True
+
     if changed:
         write_user_config()
 
-# load user config at startup
+
+# ------------------------------------------------------------------------------
+# Startup
+# ------------------------------------------------------------------------------
+
 load_config()
 
-# temporary config
+# ------------------------------------------------------------------------------
+# Runtime State (Non-persistent)
+# ------------------------------------------------------------------------------
+
 config.current_prompt = ""
 config.cancelled = False
 config.last_multi_bible_selection = [config.default_bible]
@@ -169,11 +144,14 @@ config.last_chapter = 3
 config.last_verse = 16
 config.backup_required = False
 config.export_item = ""
-config.action_list = {
-    # general
-    ".ideas": "generate ideas for prompts to try",
+
+# ------------------------------------------------------------------------------
+# Command Registry
+# ------------------------------------------------------------------------------
+
+config.action_list: Dict[str, str] = {
+    ".ideas": "generate ideas for prompts",
     ".exit": "exit current prompt",
-    # conversations
     ".new": "new conversation",
     ".trim": "trim conversation",
     ".edit": "edit conversation",
@@ -182,99 +160,70 @@ config.action_list = {
     ".export": "export conversation",
     ".backup": "backup conversation",
     ".find": "search conversation",
-    # UBA content
     ".bible": "open bible verse",
     ".chapter": "open bible chapter",
-    ".compare": "compare bible verse in different versions",
-    ".comparechapter": "compare bible chapter in different versions",
-    ".xref": "open cross-references",
-    ".treasury": "open treasury of scripture knowledge",
-    ".commentary": "open commentary",
-    ".aicommentary": "open AI commentary",
-    ".index": "open verse study indexes",
-    ".translation": "open interlinear, literal & dynamic translations",
-    ".discourse": "open discourse analysis",
-    ".morphology": "open morphology data",
+    ".compare": "compare bible verse",
     ".search": "search bible",
     ".dictionary": "search dictionary",
     ".encyclopedia": "search encyclopedia",
     ".lexicon": "search lexicon",
-    ".parallel": "search parallel passages",
-    ".promise": "search bible promises",
-    ".topic": "search bible topic",
-    ".name": "search bible name",
-    ".character": "search bible character",
-    ".location": "search bible location",
-    ".chronology": "open bible chronology",
-    ".defaultbible": "configure default bible",
-    ".defaultcommentary": "configure default commentary",
-    ".defaultencyclopedia": "configure default encyclopedia",
-    ".defaultlexicon": "configure default lexicon",
-    # resource information
-    ".tools": "list available tools",
-    ".plans": "list available plans",
-    ".resources": "list UniqueBible resources",
-    # configurations
-    ".backend": "configure backend",
-    ".steps": "configure the maximum number of steps allowed",
-    ".matches": "configure the maximum number of semantic matches",
-    ".mode": "configure AI mode",
-    #".agent": "switch to agent mode",
-    #".partner": "switch to partner mode",
-    #".chat": "switch to chat mode",
-    ".autosuggest": "toggle auto input suggestions",
-    ".autoprompt": "toggle auto prompt engineering",
-    ".autotool": "toggle auto tool selection in chat mode",
-    ".light": "toggle light context",
-    # file access
-    ".content": "show current directory content",
-    ".open": "open file or folder",
-    ".download": "download data files",
-    # help
     ".help": "help page",
 }
 
-# copy etextedit plugins
-ETEXTEDIT_USER_PULGIN_DIR = os.path.join(os.path.expanduser("~"), "etextedit", "plugins")
-if not os.path.isdir(ETEXTEDIT_USER_PULGIN_DIR):
-    Path(ETEXTEDIT_USER_PULGIN_DIR).mkdir(parents=True, exist_ok=True)
-BIBLEMATE_ETEXTEDIT_PLUGINS = os.path.join(os.path.dirname(os.path.realpath(__file__)), "etextedit", "plugins")
-for file_name in os.listdir(BIBLEMATE_ETEXTEDIT_PLUGINS):
-    full_file_name = os.path.join(BIBLEMATE_ETEXTEDIT_PLUGINS, file_name)
-    if file_name.endswith(".py") and os.path.isfile(full_file_name) and not os.path.isfile(os.path.join(ETEXTEDIT_USER_PULGIN_DIR, file_name)):
-        shutil.copy(full_file_name, ETEXTEDIT_USER_PULGIN_DIR)
+# ------------------------------------------------------------------------------
+# Plugin Copy (idempotent)
+# ------------------------------------------------------------------------------
 
-# constants
+ETEXTEDIT_PLUGIN_DIR = Path.home() / "etextedit" / "plugins"
+ETEXTEDIT_PLUGIN_DIR.mkdir(parents=True, exist_ok=True)
+
+SOURCE_PLUGIN_DIR = BASE_DIR / "etextedit" / "plugins"
+
+for plugin in SOURCE_PLUGIN_DIR.glob("*.py"):
+    target = ETEXTEDIT_PLUGIN_DIR / plugin.name
+    if not target.exists():
+        shutil.copy(plugin, target)
+
+# ------------------------------------------------------------------------------
+# Constants
+# ------------------------------------------------------------------------------
+
 AGENTMAKE_CONFIG = {
     "stream": True,
     "print_on_terminal": False,
     "word_wrap": False,
 }
-OLLAMA_NOT_FOUND = "`Ollama` is not found! BibleMate AI uses `Ollama` to generate embeddings for semantic searches. You may install it from https://ollama.com/ so that you can perform semantic searches of the Bible with BibleMate AI."
-BIBLEMATE_VERSION = readTextFile(os.path.join(os.path.dirname(os.path.realpath(__file__)), "version.txt"))
-#BIBLEMATEDATA = os.path.join(AGENTMAKE_USER_DIR, "biblemate", "data")
-#if not os.path.isdir(BIBLEMATEDATA):
-#    Path(BIBLEMATEDATA).mkdir(parents=True, exist_ok=True)
-BIBLEMATEVECTORSTORE = os.path.join(os.path.expanduser("~"), "biblemate", "data", "vectors")
-if not os.path.isdir(BIBLEMATEVECTORSTORE):
-    Path(BIBLEMATEVECTORSTORE).mkdir(parents=True, exist_ok=True)
-BIBLEMATETEMP = os.path.join(os.path.dirname(os.path.realpath(__file__)), "temp")
-if not os.path.isdir(BIBLEMATETEMP):
-    Path(BIBLEMATETEMP).mkdir(parents=True, exist_ok=True)
+
+OLLAMA_NOT_FOUND = (
+    "`Ollama` is not found! BibleMate AI uses it for embeddings.\n"
+    "Install from https://ollama.com/"
+)
+
+BIBLEMATE_VERSION = readTextFile(str(VERSION_FILE)).strip()
+
 DIALOGS = TerminalModeDialogs()
 
-def fix_string(content):
-    return content.replace(" ", " ").replace("‑", "-")
+# ------------------------------------------------------------------------------
+# Utilities
+# ------------------------------------------------------------------------------
 
-def list_dir_content(directory:str="."):
-    directory = os.path.expanduser(directory.replace("%2F", "/"))
-    if os.path.isdir(directory):
-        folders = []
-        files = []
-        for item in sorted(os.listdir(directory)):
-            if os.path.isdir(os.path.join(directory, item)):
-                folders.append(f"📁 {item}")
-            else:
-                files.append(f"📄 {item}")
-        return " ".join(folders) + ("\n\n" if folders and files else "") + " ".join(files)
-    return "Invalid path!"
+def fix_string(text: str) -> str:
+    return text.replace(" ", " ").replace("-", "-")
+
+
+def list_dir_content(directory: str = ".") -> str:
+    path = Path(directory.replace("%2F", "/")).expanduser()
+
+    if not path.is_dir():
+        return "Invalid path!"
+
+    folders: List[str] = []
+    files: List[str] = []
+
+    for item in sorted(path.iterdir()):
+        if item.is_dir():
+            folders.append(f"📁 {item.name}")
+        else:
+            files.append(f"📄 {item.name}")
+
+    return " ".join(folders) + ("\n\n" if folders and files else "") + " ".join(files)

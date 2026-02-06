@@ -44,6 +44,7 @@ def getResponse(messages:list) -> str:
     return messages[-1].get("content") if messages and "content" in messages[-1] else "Error!"
 
 def chapter2verses(request:str) -> str:
+    import re
     return re.sub("[Cc][Hh][Aa][Pp][Tt][Ee][Rr] ([0-9]+?)([^0-9])", r"\1:1-180\2", request)
 
 # Note: Declare global variables used in MCP resources, tools or prompts, so that they work when MCP is run in http transport mode
@@ -679,401 +680,402 @@ def search_the_whole_bible(request:str) -> str:
     global search_bible
     return search_bible(request)
 
-@mcp.tool
-def search_genesis_only(request:str) -> str:
-    """search the book of Genesis only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=1)
-
-@mcp.tool
-def search_exodus_only(request:str) -> str:
-    """search the book of Exodus only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=2)
-
-@mcp.tool
-def search_leviticus_only(request:str) -> str:
-    """search the book of Leviticus only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=3)
-
-@mcp.tool
-def search_numbers_only(request:str) -> str:
-    """search the book of Numbers only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=4)
-
-@mcp.tool
-def search_deuteronomy_only(request:str) -> str:
-    """search the book of Deuteronomy only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=5)
-
-@mcp.tool
-def search_joshua_only(request:str) -> str:
-    """search the book of Joshua only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=6)
-
-@mcp.tool
-def search_judges_only(request:str) -> str:
-    """search the book of Judges only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=7)
-
-@mcp.tool
-def search_ruth_only(request:str) -> str:
-    """search the book of Ruth only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=8)
-
-@mcp.tool
-def search_1_samuel_only(request:str) -> str:
-    """search the book of 1 Samuel only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=9)
-
-@mcp.tool
-def search_2_samuel_only(request:str) -> str:
-    """search the book of 2 Samuel only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=10)
-
-@mcp.tool
-def search_1_kings_only(request:str) -> str:
-    """search the book of 1 Kings only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=11)
-
-@mcp.tool
-def search_2_kings_only(request:str) -> str:
-    """search the book of 2 Kings only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=12)
-
-@mcp.tool
-def search_1_chronicles_only(request:str) -> str:
-    """search the book of 1 Chronicles only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=13)
-
-@mcp.tool
-def search_2_chronicles_only(request:str) -> str:
-    """search the book of 2 Chronicles only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=14)
-
-@mcp.tool
-def search_ezra_only(request:str) -> str:
-    """search the book of Ezra only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=15)
-
-@mcp.tool
-def search_nehemiah_only(request:str) -> str:
-    """search the book of Nehemiah only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=16)
-
-@mcp.tool
-def search_esther_only(request:str) -> str:
-    """search the book of Esther only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=17)
-
-@mcp.tool
-def search_job_only(request:str) -> str:
-    """search the book of Job only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=18)
-
-@mcp.tool
-def search_psalms_only(request:str) -> str:
-    """search the book of Psalms only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=19)
-
-@mcp.tool
-def search_proverbs_only(request:str) -> str:
-    """search the book of Proverbs only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=20)
-
-@mcp.tool
-def search_ecclesiastes_only(request:str) -> str:
-    """search the book of Ecclesiastes only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=21)
-
-@mcp.tool
-def search_song_of_songs_only(request:str) -> str:
-    """search the book of Song of Songs only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=22)
-
-@mcp.tool
-def search_isaiah_only(request:str) -> str:
-    """search the book of Isaiah only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=23)
-
-@mcp.tool
-def search_jeremiah_only(request:str) -> str:
-    """search the book of Jeremiah only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=24)
-
-@mcp.tool
-def search_lamentations_only(request:str) -> str:
-    """search the book of Lamentations only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=25)
-
-@mcp.tool
-def search_ezekiel_only(request:str) -> str:
-    """search the book of Ezekiel only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=26)
-
-@mcp.tool
-def search_daniel_only(request:str) -> str:
-    """search the book of Daniel only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=27)
-
-@mcp.tool
-def search_hosea_only(request:str) -> str:
-    """search the book of Hosea only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=28)
-
-@mcp.tool
-def search_joel_only(request:str) -> str:
-    """search the book of Joel only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=29)
-
-@mcp.tool
-def search_amos_only(request:str) -> str:
-    """search the book of Amos only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=30)
-
-@mcp.tool
-def search_obadiah_only(request:str) -> str:
-    """search the book of Obadiah only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=31)
-
-@mcp.tool
-def search_jonah_only(request:str) -> str:
-    """search the book of Jonah only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=32)
-
-@mcp.tool
-def search_micah_only(request:str) -> str:
-    """search the book of Micah only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=33)
-
-@mcp.tool
-def search_nahum_only(request:str) -> str:
-    """search the book of Nahum only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=34)
-
-@mcp.tool
-def search_habakkuk_only(request:str) -> str:
-    """search the book of Habakkuk only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=35)
-
-@mcp.tool
-def search_zephaniah_only(request:str) -> str:
-    """search the book of Zephaniah only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=36)
-
-@mcp.tool
-def search_haggai_only(request:str) -> str:
-    """search the book of Haggai only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=37)
-
-@mcp.tool
-def search_zechariah_only(request:str) -> str:
-    """search the book of Zechariah only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=38)
-
-@mcp.tool
-def search_malachi_only(request:str) -> str:
-    """search the book of Malachi only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=39)
-
-@mcp.tool
-def search_matthew_only(request:str) -> str:
-    """search the book of Matthew only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=40)
-
-@mcp.tool
-def search_mark_only(request:str) -> str:
-    """search the book of Mark only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=41)
-
-@mcp.tool
-def search_luke_only(request:str) -> str:
-    """search the book of Luke only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=42)
-
-@mcp.tool
-def search_john_only(request:str) -> str:
-    """search the book of John only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=43)
-
-@mcp.tool
-def search_acts_only(request:str) -> str:
-    """search the book of Acts only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=44)
-
-@mcp.tool
-def search_romans_only(request:str) -> str:
-    """search the book of Romans only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=45)
-
-@mcp.tool
-def search_1_corinthians_only(request:str) -> str:
-    """search the book of 1 Corinthians only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=46)
-
-@mcp.tool
-def search_2_corinthians_only(request:str) -> str:
-    """search the book of 2 Corinthians only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=47)
-
-@mcp.tool
-def search_galatians_only(request:str) -> str:
-    """search the book of Galatians only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=48)
-
-@mcp.tool
-def search_ephesians_only(request:str) -> str:
-    """search the book of Ephesians only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=49)
-
-@mcp.tool
-def search_philippians_only(request:str) -> str:
-    """search the book of Philippians only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=50)
-
-@mcp.tool
-def search_colossians_only(request:str) -> str:
-    """search the book of Colossians only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=51)
-
-@mcp.tool
-def search_1_thessalonians_only(request:str) -> str:
-    """search the book of 1 Thessalonians only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=52)
-
-@mcp.tool
-def search_2_thessalonians_only(request:str) -> str:
-    """search the book of 2 Thessalonians only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=53)
-
-@mcp.tool
-def search_1_timothy_only(request:str) -> str:
-    """search the book of 1 Timothy only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=54)
-
-@mcp.tool
-def search_2_timothy_only(request:str) -> str:
-    """search the book of 2 Timothy only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=55)
-
-@mcp.tool
-def search_titus_only(request:str) -> str:
-    """search the book of Titus only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=56)
-
-@mcp.tool
-def search_philemon_only(request:str) -> str:
-    """search the book of Philemon only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=57)
-
-@mcp.tool
-def search_hebrews_only(request:str) -> str:
-    """search the book of Hebrews only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=58)
-
-@mcp.tool
-def search_james_only(request:str) -> str:
-    """search the book of James only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=59)
-
-@mcp.tool
-def search_1_peter_only(request:str) -> str:
-    """search the book of 1 Peter only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=60)
-
-@mcp.tool
-def search_2_peter_only(request:str) -> str:
-    """search the book of 2 Peter only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=61)
-
-@mcp.tool
-def search_1_john_only(request:str) -> str:
-    """search the book of 1 John only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=62)
-
-@mcp.tool
-def search_2_john_only(request:str) -> str:
-    """search the book of 2 John only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=63)
-
-@mcp.tool
-def search_3_john_only(request:str) -> str:
-    """search the book of 3 John only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=64)
-
-@mcp.tool
-def search_jude_only(request:str) -> str:
-    """search the book of Jude only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=65)
-
-@mcp.tool
-def search_revelation_only(request:str) -> str:
-    """search the book of Revelation only; search string must be given"""
-    global search_bible
-    return search_bible(request, book=66)
+if hasattr(config, "full_mcp") and config.full_mcp: # full mcp includes all books as separate resources
+    @mcp.tool
+    def search_genesis_only(request:str) -> str:
+        """search the book of Genesis only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=1)
+
+    @mcp.tool
+    def search_exodus_only(request:str) -> str:
+        """search the book of Exodus only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=2)
+
+    @mcp.tool
+    def search_leviticus_only(request:str) -> str:
+        """search the book of Leviticus only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=3)
+
+    @mcp.tool
+    def search_numbers_only(request:str) -> str:
+        """search the book of Numbers only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=4)
+
+    @mcp.tool
+    def search_deuteronomy_only(request:str) -> str:
+        """search the book of Deuteronomy only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=5)
+
+    @mcp.tool
+    def search_joshua_only(request:str) -> str:
+        """search the book of Joshua only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=6)
+
+    @mcp.tool
+    def search_judges_only(request:str) -> str:
+        """search the book of Judges only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=7)
+
+    @mcp.tool
+    def search_ruth_only(request:str) -> str:
+        """search the book of Ruth only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=8)
+
+    @mcp.tool
+    def search_1_samuel_only(request:str) -> str:
+        """search the book of 1 Samuel only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=9)
+
+    @mcp.tool
+    def search_2_samuel_only(request:str) -> str:
+        """search the book of 2 Samuel only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=10)
+
+    @mcp.tool
+    def search_1_kings_only(request:str) -> str:
+        """search the book of 1 Kings only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=11)
+
+    @mcp.tool
+    def search_2_kings_only(request:str) -> str:
+        """search the book of 2 Kings only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=12)
+
+    @mcp.tool
+    def search_1_chronicles_only(request:str) -> str:
+        """search the book of 1 Chronicles only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=13)
+
+    @mcp.tool
+    def search_2_chronicles_only(request:str) -> str:
+        """search the book of 2 Chronicles only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=14)
+
+    @mcp.tool
+    def search_ezra_only(request:str) -> str:
+        """search the book of Ezra only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=15)
+
+    @mcp.tool
+    def search_nehemiah_only(request:str) -> str:
+        """search the book of Nehemiah only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=16)
+
+    @mcp.tool
+    def search_esther_only(request:str) -> str:
+        """search the book of Esther only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=17)
+
+    @mcp.tool
+    def search_job_only(request:str) -> str:
+        """search the book of Job only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=18)
+
+    @mcp.tool
+    def search_psalms_only(request:str) -> str:
+        """search the book of Psalms only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=19)
+
+    @mcp.tool
+    def search_proverbs_only(request:str) -> str:
+        """search the book of Proverbs only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=20)
+
+    @mcp.tool
+    def search_ecclesiastes_only(request:str) -> str:
+        """search the book of Ecclesiastes only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=21)
+
+    @mcp.tool
+    def search_song_of_songs_only(request:str) -> str:
+        """search the book of Song of Songs only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=22)
+
+    @mcp.tool
+    def search_isaiah_only(request:str) -> str:
+        """search the book of Isaiah only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=23)
+
+    @mcp.tool
+    def search_jeremiah_only(request:str) -> str:
+        """search the book of Jeremiah only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=24)
+
+    @mcp.tool
+    def search_lamentations_only(request:str) -> str:
+        """search the book of Lamentations only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=25)
+
+    @mcp.tool
+    def search_ezekiel_only(request:str) -> str:
+        """search the book of Ezekiel only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=26)
+
+    @mcp.tool
+    def search_daniel_only(request:str) -> str:
+        """search the book of Daniel only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=27)
+
+    @mcp.tool
+    def search_hosea_only(request:str) -> str:
+        """search the book of Hosea only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=28)
+
+    @mcp.tool
+    def search_joel_only(request:str) -> str:
+        """search the book of Joel only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=29)
+
+    @mcp.tool
+    def search_amos_only(request:str) -> str:
+        """search the book of Amos only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=30)
+
+    @mcp.tool
+    def search_obadiah_only(request:str) -> str:
+        """search the book of Obadiah only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=31)
+
+    @mcp.tool
+    def search_jonah_only(request:str) -> str:
+        """search the book of Jonah only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=32)
+
+    @mcp.tool
+    def search_micah_only(request:str) -> str:
+        """search the book of Micah only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=33)
+
+    @mcp.tool
+    def search_nahum_only(request:str) -> str:
+        """search the book of Nahum only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=34)
+
+    @mcp.tool
+    def search_habakkuk_only(request:str) -> str:
+        """search the book of Habakkuk only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=35)
+
+    @mcp.tool
+    def search_zephaniah_only(request:str) -> str:
+        """search the book of Zephaniah only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=36)
+
+    @mcp.tool
+    def search_haggai_only(request:str) -> str:
+        """search the book of Haggai only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=37)
+
+    @mcp.tool
+    def search_zechariah_only(request:str) -> str:
+        """search the book of Zechariah only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=38)
+
+    @mcp.tool
+    def search_malachi_only(request:str) -> str:
+        """search the book of Malachi only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=39)
+
+    @mcp.tool
+    def search_matthew_only(request:str) -> str:
+        """search the book of Matthew only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=40)
+
+    @mcp.tool
+    def search_mark_only(request:str) -> str:
+        """search the book of Mark only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=41)
+
+    @mcp.tool
+    def search_luke_only(request:str) -> str:
+        """search the book of Luke only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=42)
+
+    @mcp.tool
+    def search_john_only(request:str) -> str:
+        """search the book of John only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=43)
+
+    @mcp.tool
+    def search_acts_only(request:str) -> str:
+        """search the book of Acts only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=44)
+
+    @mcp.tool
+    def search_romans_only(request:str) -> str:
+        """search the book of Romans only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=45)
+
+    @mcp.tool
+    def search_1_corinthians_only(request:str) -> str:
+        """search the book of 1 Corinthians only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=46)
+
+    @mcp.tool
+    def search_2_corinthians_only(request:str) -> str:
+        """search the book of 2 Corinthians only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=47)
+
+    @mcp.tool
+    def search_galatians_only(request:str) -> str:
+        """search the book of Galatians only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=48)
+
+    @mcp.tool
+    def search_ephesians_only(request:str) -> str:
+        """search the book of Ephesians only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=49)
+
+    @mcp.tool
+    def search_philippians_only(request:str) -> str:
+        """search the book of Philippians only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=50)
+
+    @mcp.tool
+    def search_colossians_only(request:str) -> str:
+        """search the book of Colossians only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=51)
+
+    @mcp.tool
+    def search_1_thessalonians_only(request:str) -> str:
+        """search the book of 1 Thessalonians only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=52)
+
+    @mcp.tool
+    def search_2_thessalonians_only(request:str) -> str:
+        """search the book of 2 Thessalonians only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=53)
+
+    @mcp.tool
+    def search_1_timothy_only(request:str) -> str:
+        """search the book of 1 Timothy only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=54)
+
+    @mcp.tool
+    def search_2_timothy_only(request:str) -> str:
+        """search the book of 2 Timothy only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=55)
+
+    @mcp.tool
+    def search_titus_only(request:str) -> str:
+        """search the book of Titus only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=56)
+
+    @mcp.tool
+    def search_philemon_only(request:str) -> str:
+        """search the book of Philemon only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=57)
+
+    @mcp.tool
+    def search_hebrews_only(request:str) -> str:
+        """search the book of Hebrews only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=58)
+
+    @mcp.tool
+    def search_james_only(request:str) -> str:
+        """search the book of James only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=59)
+
+    @mcp.tool
+    def search_1_peter_only(request:str) -> str:
+        """search the book of 1 Peter only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=60)
+
+    @mcp.tool
+    def search_2_peter_only(request:str) -> str:
+        """search the book of 2 Peter only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=61)
+
+    @mcp.tool
+    def search_1_john_only(request:str) -> str:
+        """search the book of 1 John only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=62)
+
+    @mcp.tool
+    def search_2_john_only(request:str) -> str:
+        """search the book of 2 John only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=63)
+
+    @mcp.tool
+    def search_3_john_only(request:str) -> str:
+        """search the book of 3 John only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=64)
+
+    @mcp.tool
+    def search_jude_only(request:str) -> str:
+        """search the book of Jude only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=65)
+
+    @mcp.tool
+    def search_revelation_only(request:str) -> str:
+        """search the book of Revelation only; search string must be given"""
+        global search_bible
+        return search_bible(request, book=66)
 
 @mcp.tool
 def compare_bible_translations(request:str) -> str:

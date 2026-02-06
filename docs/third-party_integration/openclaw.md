@@ -1,5 +1,7 @@
 # Integration with OpenClaw
 
+<img width="1342" height="1068" alt="Image" src="https://github.com/user-attachments/assets/bdfec840-fee9-40c8-aa3a-e502e6b98ae8" />
+
 Install `mcpporter` and enable it in OpenClaw's skills.
 
 For example, assume `biblemate` is installed in a venv `~/ai`

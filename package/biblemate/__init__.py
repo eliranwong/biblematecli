@@ -160,6 +160,7 @@ def load_config():
 load_config()
 
 # temporary config
+config.full_mcp=True
 config.current_prompt = ""
 config.cancelled = False
 config.last_multi_bible_selection = [config.default_bible]

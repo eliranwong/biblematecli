@@ -161,7 +161,54 @@ To help users stay aware of the current AI mode, the input border color changes 
 
 [Reload an Unfinished Workflow](https://youtu.be/NHR8J935BkI)
 
-## 📄 License
+## � Third-Party Integrations
+
+BibleMate AI can be integrated with third-party AI platforms through its MCP (Model Context Protocol) server. This enables you to access BibleMate's comprehensive Bible study tools from within other AI environments.
+
+### Supported Platforms
+
+#### Google Antigravity
+
+Integrate BibleMate AI with Google's Antigravity platform to add Bible study capabilities to your AI agent.
+
+**Key Features:**
+- Access to BibleMate tools through MCP server
+- Seamless integration with Antigravity's agent skills
+- Support for authenticated connections
+
+**Quick Setup:**
+1. Run the MCP server: `nohup biblematemcpmini -b googleai -p 33334 &`
+2. Configure the MCP server in Antigravity's settings
+3. Add BibleMate skills to your agent
+
+📖 **Detailed Instructions:** [Antigravity Integration Guide](docs/third-party_integration/antigravity.md)
+
+#### OpenClaw
+
+Connect BibleMate AI to OpenClaw through the mcpporter skill.
+
+**Key Features:**
+- Simple configuration through mcporter.json
+- Background MCP server operation
+- Optional token-based authentication
+
+**Quick Setup:**
+1. Install and enable `mcpporter` in OpenClaw
+2. Run the MCP server: `nohup biblematemcpmini -b googleai -p 33334 &`
+3. Configure the server in `~/.openclaw/workspace-main/config/mcporter.json`
+
+📖 **Detailed Instructions:** [OpenClaw Integration Guide](docs/third-party_integration/openclaw.md)
+
+### MCP Server
+
+BibleMate AI includes two MCP server commands:
+
+- **`biblematemcp`** - Full MCP server with all available tools
+- **`biblematemcpmini`** - Lightweight MCP server (recommended for platforms with tool limits)
+
+**Note:** Some platforms (like Antigravity) have limits on the number of tools per MCP server. Use `biblematemcpmini` for these platforms.
+
+## �📄 License
 
 This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License - see the [LICENSE](LICENSE) file for details.
 

@@ -1,4 +1,4 @@
-# Configure BibleMate MCP Server in Google Antigravity
+# Integration with Google Antigravity
 
 <img width="839" height="990" alt="Image" src="https://github.com/user-attachments/assets/14fddc7e-e0dd-472d-8c53-d3879c2ba2cc" />
 
@@ -15,43 +15,56 @@
 
 
 3. **Add Your Bible Server:**
+
+* Run `biblematemcpmini` in the background, e.g.:
+
+> nohup biblematemcpmini -b googleai -p 33334 &
+
 * Insert a new entry into the `mcpServers` object.
 
-#### Option A: Connection via Command (Recommended)
-
-```json
+```
     "biblemate": {
-      "command": "python",
-      "args": [
-        "/home/username/agentmake/biblemate/bible_study_mcp.py"
-      ]
+      "serverUrl": "http://127.0.0.1:33334/mcp/"
     }
 ```
 
-#### Option B: Connection via URL
-
-Alternately, run command `biblematemcp`, and configure like:
+If you have a token configured to the variable `BIBLEMATE_STATIC_TOKEN` in `~/agentmake/biblemate/biblemate.config`, use the following:
 
 ```
     "biblemate": {
-      "serverUrl": "http://127.0.0.1:33333/mcp/"
-    }
-```
-
-If token is configured:
-
-```
-    "biblemate": {
-      "serverUrl": "http://127.0.0.1:33333/mcp/",
+      "serverUrl": "http://127.0.0.1:33334/mcp/",
       "headers": {
-        "Authorization": "Bearer <TOKEN>"
+        "Authorization": "Bearer <BIBLEMATE_STATIC_TOKEN>"
       }
     }
 ```
 
-Remarks: Option B requires running the MCP server in the background, with the command `biblematemcpmini`. Do not run `biblematemcp` for this option, as Antigravity does not support more than 50 tools.
+Remarks: This requires running the MCP server in the background, with the command `biblematemcpmini`. Do not run `biblematemcp`, as Antigravity does not support a single MCP server with more than 50 tools.
 
 4. **Refresh and Verify:**
 * Save the file and return to the **Manage MCP Servers** tab.
 * Click **Refresh**. You should see "bible-server" appear with a green status indicator.
 
+5. Add BibleMate to the Agent's Skills:
+
+Read https://github.com/eliranwong/biblematecli/blob/main/package/biblemate/skills/antigravity/README.md
+
+
+### Optional - Bash Script
+
+Add a bash script to run `biblematemcpmini` in the background:
+
+```bash
+## mcp mini server
+start_bmmcpmini() {
+  echo "Starting BibleMate MCP mini server ..."
+  nohup biblematemcpmini -b googleai -p 33334 &
+  echo "BibleMate AI MCP mini server started."
+}
+### Check if BibleMate MCP mini server is already running
+if ! pgrep -f "/bin/biblematemcpmini" > /dev/null; then
+  start_bmmcpmini
+else
+  echo "BibleMate AI MCP mini server is already running."
+fi
+```

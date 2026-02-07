@@ -2,7 +2,7 @@ from setuptools import setup
 from setuptools.command.install import install
 import os, shutil, platform, sys
 
-version = "0.2.64"
+version = "0.2.67"
 with open(os.path.join("biblemate", "version.txt"), "w", encoding="utf-8") as fileObj:
     fileObj.write(version)
 
@@ -47,6 +47,9 @@ setup(
         f"{package}.api",
         f"{package}.etextedit",
         f"{package}.etextedit.plugins",
+        f"{package}.skills",
+        f"{package}.skills.antigravity",
+        f"{package}.skills.openclaw",
         #f"{package}.data",
         #f"{package}.data.bibles",
     ],
@@ -57,6 +60,9 @@ setup(
         f"{package}.api": ["*.*"],
         f"{package}.etextedit": ["*.*"],
         f"{package}.etextedit.plugins": ["*.*"],
+        f"{package}.skills": ["*.*"],
+        f"{package}.skills.antigravity": ["*.*"],
+        f"{package}.skills.openclaw": ["*.*"],
         #f"{package}.data": ["*.*"],
         #f"{package}.data.bibles": ["*.*"],
     },

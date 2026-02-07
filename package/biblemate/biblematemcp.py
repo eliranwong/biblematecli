@@ -15,11 +15,14 @@ if args.model:
     config.model = args.model
 
 def run_mcp(full_mcp:bool=False):
-    if full_mcp:
-        config.full_mcp = True
     builtin_mcp_server = os.path.join(os.path.dirname(os.path.realpath(__file__)), "bible_study_mcp.py")
     user_mcp_server = os.path.join(AGENTMAKE_USER_DIR, "biblemate", "bible_study_mcp.py") # The user path has the same basename as the built-in one; users may copy the built-in server settings to this location for customization. 
     mcp_script = readTextFile(user_mcp_server if os.path.isfile(user_mcp_server) else builtin_mcp_server)
+    if full_mcp:
+        config.full_mcp = True
+    else:
+        config.full_mcp = False
+        mcp_script = mcp_script.replace("request:List[Dict[str, Any]]", "request:str")
     mcp_script = mcp_script.replace("mcp.run(show_banner=False)", f'''mcp.run(show_banner=False, transport="http", host="0.0.0.0", port={args.port if args.port else config.mcp_port})''')
     exec(mcp_script)
 

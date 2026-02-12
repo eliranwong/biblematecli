@@ -2,7 +2,7 @@ from setuptools import setup
 from setuptools.command.install import install
 import os, shutil, platform, sys
 
-version = "0.2.67"
+version = "0.2.71"
 with open(os.path.join("biblemate", "version.txt"), "w", encoding="utf-8") as fileObj:
     fileObj.write(version)
 
@@ -75,8 +75,12 @@ setup(
         "console_scripts": [
             f"bm={package}.main:main",
             f"{package}={package}.main:main",
+            f"bmmcp={package}.biblematemcp:mcp",
             f"{package}mcp={package}.biblematemcp:mcp",
+            f"bmmcpmini={package}.biblematemcp:mcpmini",
             f"{package}mcpmini={package}.biblematemcp:mcpmini",
+            f"bmmcpskill={package}.biblematemcpskill:install_skill",
+            f"{package}mcpskill={package}.biblematemcpskill:install_skill",
         ],
     },
     keywords="mcp agent biblemate ai anthropic azure chatgpt cohere deepseek genai github googleai groq llamacpp mistral ollama openai vertexai xai",

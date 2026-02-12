@@ -1107,10 +1107,17 @@ def retrieve_interlinear_hebrew_or_greek_bible_verses(request:str) -> str:
 
 @mcp.tool
 def retrieve_bible_verses(request:str) -> str:
-    """retrieve Bible verses; bible verse reference(s) must be given, e.g. John 3:16-17; single or multiple references accepted, e.g. Deut 6:4; Gen 1:26-27"""
+    """retrieve English Bible verses; bible verse reference(s) must be given, e.g. John 3:16-17; single or multiple references accepted, e.g. Deut 6:4; Gen 1:26-27"""
     global run_bm_api, chapter2verses
     request = chapter2verses(request)
     return run_bm_api(f"verses:::{config.default_bible}:::{request}")
+
+@mcp.tool
+def retrieve_chinese_bible_verses(request:str) -> str:
+    """retrieve Chinese Bible verses; bible verse reference(s) must be given, e.g. John 3:16-17; single or multiple references accepted, e.g. Deut 6:4; Gen 1:26-27"""
+    global run_bm_api, chapter2verses
+    request = chapter2verses(request)
+    return run_bm_api(f"verses:::CUV:::{request}")
 
 @mcp.tool
 def retrieve_verse_morphology(request:str) -> str:

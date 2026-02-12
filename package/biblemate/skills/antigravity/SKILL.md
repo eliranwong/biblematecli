@@ -30,7 +30,14 @@ When a user asks a bible study question:
    - What depth of analysis is appropriate?
    - What specific questions need answering?
 
-2. **Create Preliminary Action Plan**: Document your plan in a structured format
+2. **Refine and Engineer the Prompt**: Improve the user's original request to ensure optimal results.
+   - **Identify and address ambiguities**: Clarify unclear assumptions, missing information, or vague terms.
+   - **Rephrase for comprehension**: Apply knowledge of language structures, syntax, and semantics to rephrase the prompt for better comprehension.
+   - **Contextualize**: Consider the context, goals, and potential constraints of the task or request.
+   - **Optimize**: Ensure the revised prompt is concise, yet comprehensive, and accurately reflects the user's needs.
+   - **Apply Best Practices**: Specify output formats, provide examples, or define key terms as needed.
+
+3. **Create Preliminary Action Plan**: Document your plan in a structured format
    ```markdown
    # Preliminary Action Plan
    
@@ -60,7 +67,7 @@ When a user asks a bible study question:
    - [What insights should be provided]
    ```
 
-3. **Use task_boundary tool**: Set mode to PLANNING with TaskName like "Bible Study: [Topic/Passage]"
+4. **Use task_boundary tool**: Set mode to PLANNING with TaskName like "Bible Study: [Topic/Passage]"
 
 ### Phase 2: Execution
 Execute each step in your action plan:
@@ -95,7 +102,8 @@ Create a comprehensive final report:
 ## Available Biblemate Tools
 
 ### Core Retrieval
-- `mcp_biblemate_retrieve_bible_verses` - Get verse text (multiple translations)
+- `mcp_biblemate_retrieve_bible_verses` - Get English verse text
+- `mcp_biblemate_retrieve_chinese_bible_verses` - Get Chinese verse text
 - `mcp_biblemate_retrieve_bible_chapter` - Get full chapter
 - `mcp_biblemate_retrieve_bible_cross_references` - Get related verses
 - `mcp_biblemate_retrieve_hebrew_or_greek_bible_verses` - Get original language text
@@ -113,6 +121,8 @@ Create a comprehensive final report:
 - `mcp_biblemate_study_old_testament_themes` - OT thematic analysis
 - `mcp_biblemate_study_new_testament_themes` - NT thematic analysis
 - `mcp_biblemate_expound_bible_topic` - Detailed exposition on a topic
+- `mcp_biblemate_write_bible_perspectives` - Biblical perspectives and principles
+- `mcp_biblemate_write_bible_theology` - Theological messages and themes
 
 ### Context & Background
 - `mcp_biblemate_write_old_testament_historical_context` - Historical background for OT
@@ -128,6 +138,9 @@ Create a comprehensive final report:
 - `mcp_biblemate_write_bible_outline` - Structural outline
 - `mcp_biblemate_identify_bible_keywords` - Extract key terms
 - `mcp_biblemate_explain_bible_meaning` - Explain meaning of content
+- `mcp_biblemate_write_bible_related_summary` - Summary in reference to Bible
+- `mcp_biblemate_write_new_testament_highlights` - Highlights in NT passage
+- `mcp_biblemate_write_old_testament_highlights` - Highlights in OT passage
 
 ### Translation & Language
 - `mcp_biblemate_translate_hebrew_bible_verse` - Translate from Hebrew
@@ -141,6 +154,7 @@ Create a comprehensive final report:
 - `mcp_biblemate_write_bible_questions` - Discussion questions for groups
 - `mcp_biblemate_write_bible_prayer` - Prayer based on scripture
 - `mcp_biblemate_write_short_bible_prayer` - Brief prayer (one paragraph)
+- `mcp_biblemate_write_pastor_prayer` - Prayer from a pastor's heart
 
 ### Expert Consultation
 - `mcp_biblemate_ask_bible_scholar` - Ask academic biblical scholar

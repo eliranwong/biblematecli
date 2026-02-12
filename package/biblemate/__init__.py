@@ -13,6 +13,7 @@ warnings.filterwarnings(
     module='agentmake'
 )
 
+BIBLEMATE_PACKAGE_DIR = os.path.dirname(os.path.realpath(__file__))
 BIBLEMATE_USER_DIR = os.path.join(AGENTMAKE_USER_DIR, "biblemate")
 if not os.path.isdir(BIBLEMATE_USER_DIR):
     Path(BIBLEMATE_USER_DIR).mkdir(parents=True, exist_ok=True)

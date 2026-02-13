@@ -12,30 +12,113 @@ Bible study MCP server with 48 tools. Use `mcporter call biblemate.<tool>` for a
 
 When a user asks a Bible-related question, **DO NOT** answer directly. Follow this structured approach:
 
-### Step 1: Analyze the Request
+---
 
-Identify:
+### Step 1: Refine the Request (Prompt Engineering)
+
+Before planning, **improve the user's request** to ensure optimal results from the tools. Apply prompt engineering principles:
+
+#### 1.1 Identify Issues in the Original Request
+
+Check for:
+- **Ambiguities:** Words with multiple meanings (e.g., "love" — agape, phileo, eros?)
+- **Vague scope:** "Tell me about Paul" (which aspect? theology? biography? letters?)
+- **Missing context:** No time period, testament, or theological tradition specified
+- **Unclear intent:** Study purpose not stated (academic, devotional, sermon prep?)
+- **Assumed knowledge:** References that need clarification (e.g., "the passage about the armor")
+- **Imprecise references:** Partial or incorrect verse citations
+
+#### 1.2 Refinement Techniques
+
+Apply these strategies:
+
+| Technique | Description | Example |
+|-----------|-------------|---------|
+| **Specify scope** | Narrow broad topics to specific aspects | "grace" → "grace in Pauline epistles, specifically Ephesians 2:1-10" |
+| **Clarify intent** | State the study purpose | Add: "for devotional reflection" or "for exegetical analysis" |
+| **Add context** | Include relevant background | "faith" → "faith (πίστις/pistis) in Hebrews 11, examining OT examples" |
+| **Define terms** | Clarify key concepts | "salvation" → "salvation as justification, sanctification, and glorification" |
+| **Specify output** | Request particular deliverables | Add: "including cross-references and practical applications" |
+| **Bound the search** | Limit testament, genre, or author | "prophecy" → "messianic prophecy in Isaiah 7-12" |
+| **Resolve references** | Convert vague to precise | "that famous verse about love" → "1 Corinthians 13:4-7" |
+
+#### 1.3 Output the Refined Request
+
+Present the refinement in this format:
+
+```
+## Request Refinement
+
+**Original Request:** [User's exact words]
+
+**Issues Identified:**
+- [Issue 1]: [Brief explanation]
+- [Issue 2]: [Brief explanation]
+
+**Refinements Applied:**
+- [Technique used]: [How it improves the request]
+- [Technique used]: [How it improves the request]
+
+**Refined Request:** [Clear, specific, well-structured version]
+
+**Assumed Parameters:**
+- Study type: [exegetical | devotional | theological | historical | topical]
+- Depth: [overview | moderate | deep-dive]
+- Output focus: [academic | practical | both]
+```
+
+#### 1.4 Refinement Examples
+
+**Example 1: Vague Topic**
+- Original: "Tell me about faith"
+- Issues: Too broad, no scope, unclear intent
+- Refined: "Examine the concept of faith (πίστις) in Hebrews 11, analyzing how the author defines faith in v.1, the OT examples cited, and how this understanding applies to perseverance in trials. Include Greek word study and cross-references to James 2."
+
+**Example 2: Unclear Reference**
+- Original: "What's the verse about God's plans?"
+- Issues: Ambiguous reference (multiple candidates), no context
+- Refined: "Retrieve and analyze Jeremiah 29:11 ('For I know the plans I have for you'), examining its original context (exile in Babylon), proper interpretation (corporate vs. individual promise), and appropriate modern application."
+
+**Example 3: Broad Character Study**
+- Original: "Tell me about David"
+- Issues: Massive topic, no focus area
+- Refined: "Conduct a character study of David focusing on his spiritual journey through failure and restoration, specifically examining Psalm 51 in light of 2 Samuel 11-12, including the theological themes of repentance, forgiveness, and consequences of sin."
+
+**Example 4: Simple Verse Request (Minimal Refinement)**
+- Original: "What does John 3:16 mean?"
+- Issues: None significant, but can add depth
+- Refined: "Provide exegetical analysis of John 3:16, including the Greek terms (κόσμος, μονογενής, πιστεύων), the immediate context of Jesus' conversation with Nicodemus, theological significance of substitutionary love, and connection to John's broader 'believe' theme."
+
+---
+
+### Step 2: Analyze the Refined Request
+
+With the refined request, identify:
 - The core question or topic
 - Type of study needed (exegesis, devotional, theological, historical, practical)
 - Relevant Bible passages, characters, or themes
 - User's apparent level (casual reader, student, scholar)
+- Required depth and output format
 
-### Step 2: Create Preliminary Action Plan
+---
+
+### Step 3: Create Preliminary Action Plan
 
 Output a plan in this format:
 
 ```
 # Preliminary Action Plan
 
-**Request:** [Restate the user's question]
+**Refined Request:** [The improved version from Step 1]
 **Study Type:** [exegetical | devotional | theological | historical | topical | character | comparative]
+**Depth:** [overview | moderate | deep-dive]
 
 ## Steps
 
 1. **[Step Name]**
    - Tool: `biblemate.<tool_name>`
    - Purpose: [What this step accomplishes]
-   - Input: [The request parameter]
+   - Input: [The request parameter — be specific and well-crafted]
 
 2. **[Step Name]**
    - Tool: `biblemate.<tool_name>`
@@ -44,31 +127,45 @@ Output a plan in this format:
 
 [...continue for 3-7 steps as needed...]
 
-# Measurable Outcomes
+## Measurable Outcomes
 
 - [ ] [Specific deliverable 1]
 - [ ] [Specific deliverable 2]
 - [ ] [Specific deliverable 3]
 ```
 
-### Step 3: Execute the Plan
+**Tool Input Best Practices:**
+- Be specific in request parameters (not just "John 3" but "John 3:1-8, focusing on the new birth dialogue")
+- Include relevant context in the request string
+- For thematic searches, use precise theological vocabulary
+- For original language tools, specify what aspect to examine
+
+---
+
+### Step 4: Execute the Plan
 
 Run each step sequentially using `mcporter call biblemate.<tool> request="..."`.
 
 For each step:
-- Execute the tool call
+- Execute the tool call with the **refined, specific input**
 - Capture key findings
 - Note any cross-references or follow-up insights
+- If results are insufficient, refine the input and retry
 
-### Step 4: Quality Control
+---
+
+### Step 5: Quality Control
 
 Before finalizing, verify:
 - All measurable outcomes have been addressed
 - Findings are consistent across sources
 - Original languages support the conclusions (if applicable)
 - Practical application is grounded in the text
+- The response matches the **refined request's** intent and scope
 
-### Step 5: Final Report
+---
+
+### Step 6: Final Report
 
 Provide an integrated response:
 
@@ -110,6 +207,7 @@ Provide an integrated response:
 
 ### Retrieve & Search
 - `mcporter call biblemate.retrieve_bible_verses request="John 3:16-17"`
+- `mcporter call biblemate.retrieve_chinese_bible_verses request="John 3:16-17"`
 - `mcporter call biblemate.retrieve_bible_chapter request="Psalm 23"`
 - `mcporter call biblemate.search_the_whole_bible request="love your neighbor"`
 - `mcporter call biblemate.retrieve_bible_cross_references request="Romans 8:28"`
@@ -182,54 +280,93 @@ Provide an integrated response:
 
 ---
 
-## Example Workflow
+## Complete Example Workflow
 
 **User asks:** "What does it mean to be 'born again' in John 3?"
 
-### Preliminary Action Plan
+---
 
-**Request:** Explain the meaning of being "born again" in John 3
+### Step 1: Request Refinement
+
+**Original Request:** "What does it mean to be 'born again' in John 3?"
+
+**Issues Identified:**
+- Scope slightly vague: Which verses specifically? (John 3 has 36 verses)
+- Depth unclear: Surface explanation or deep exegesis?
+- Missing: No mention of Greek analysis (critical for "born again" ambiguity)
+
+**Refinements Applied:**
+- Specify scope: Focus on John 3:1-8 (the Nicodemus dialogue)
+- Add linguistic depth: Include Greek analysis of ἄνωθεν (anōthen)
+- Clarify theological dimension: Connect to regeneration doctrine
+- Add practical element: Modern application for believers
+
+**Refined Request:** "Provide exegetical analysis of 'born again' (γεννηθῇ ἄνωθεν) in John 3:1-8, examining: (1) the Greek double-meaning of ἄνωθεν (again/from above), (2) Jesus' explanation of water and Spirit birth, (3) why Nicodemus as a Pharisee should have understood this from OT background, (4) the theological doctrine of regeneration, and (5) practical implications for understanding conversion today."
+
+**Assumed Parameters:**
+- Study type: exegetical + theological
+- Depth: deep-dive
+- Output focus: both academic and practical
+
+---
+
+### Step 2: Analysis
+
+- Core question: Meaning of spiritual rebirth in Jesus' teaching
+- Study type: Exegetical with theological application
+- Key passage: John 3:1-8
+- Themes: Regeneration, Holy Spirit, new birth, kingdom entry
+- Level: Moderate to advanced (includes Greek)
+
+---
+
+### Step 3: Preliminary Action Plan
+
+**Refined Request:** Exegetical analysis of "born again" in John 3:1-8 with Greek study, OT background, theology, and application
 **Study Type:** exegetical + theological
+**Depth:** deep-dive
 
 ## Steps
 
 1. **Retrieve the Text**
    - Tool: `biblemate.retrieve_bible_verses`
-   - Purpose: Get the primary passage
-   - Input: "John 3:1-8"
+   - Purpose: Get the primary passage in full
+   - Input: "John 3:1-8 — Jesus' conversation with Nicodemus about being born again"
 
 2. **Greek Interlinear Analysis**
    - Tool: `biblemate.retrieve_interlinear_hebrew_or_greek_bible_verses`
-   - Purpose: Examine the Greek "γεννηθῇ ἄνωθεν" (born again/from above)
-   - Input: "John 3:3-7"
+   - Purpose: Examine γεννηθῇ ἄνωθεν — the ambiguous "born again/from above"
+   - Input: "John 3:3-7 focusing on the Greek word ἄνωθεν and its double meaning"
 
 3. **Cross-References**
    - Tool: `biblemate.retrieve_bible_cross_references`
-   - Purpose: Find related passages on spiritual rebirth
-   - Input: "John 3:3"
+   - Purpose: Find OT background and NT parallels on spiritual rebirth
+   - Input: "John 3:3-5 — passages about spiritual rebirth, new heart, and Spirit"
 
 4. **Commentary**
    - Tool: `biblemate.read_bible_commentary`
-   - Purpose: Scholarly interpretation
-   - Input: "John 3:3-5"
+   - Purpose: Scholarly interpretation of the passage
+   - Input: "John 3:3-5 born again water and Spirit, Nicodemus dialogue"
 
 5. **Theological Exposition**
    - Tool: `biblemate.expound_bible_topic`
    - Purpose: Doctrinal significance of regeneration
-   - Input: "born again regeneration"
+   - Input: "regeneration and new birth in John 3, including relationship to Ezekiel 36:25-27"
 
 6. **Practical Application**
    - Tool: `biblemate.write_bible_applications`
    - Purpose: How this applies to believers today
-   - Input: "John 3:1-8"
+   - Input: "John 3:1-8 — what being born again means for conversion and Christian life"
 
 ## Measurable Outcomes
 
-- [ ] Greek meaning of "ἄνωθεν" (anōthen) clarified
-- [ ] Relationship between water/Spirit birth explained
-- [ ] OT background Nicodemus should have known identified
+- [ ] Greek meaning of ἄνωθεν (anōthen) — "again" vs "from above" — clarified
+- [ ] Water and Spirit birth relationship explained (baptism? Ezekiel 36? amniotic?)
+- [ ] OT background identified (Ezek 36:25-27, Jer 31:33, etc.)
 - [ ] Theological doctrine of regeneration summarized
-- [ ] Practical application for modern readers provided
+- [ ] Practical application for understanding conversion provided
+
+---
 
 [Then execute each step, verify outcomes, and compile the Final Report]
 
@@ -237,8 +374,11 @@ Provide an integrated response:
 
 ## Notes
 
-- All tools take a `request` parameter (string).
-- For verse references, use standard format: `Book Chapter:Verse` (e.g., `John 3:16`, `Gen 1:1-3`).
-- Adjust the number of steps based on question complexity (simple = 3-4 steps, complex = 5-7 steps).
-- Always include at least one original language tool for exegetical questions.
-- The final report should integrate findings, not just concatenate tool outputs.
+- **Always refine first:** Even simple requests benefit from clarification
+- **Skip refinement only if:** The request is already precise with clear scope and intent
+- All tools take a `request` parameter (string) — make it detailed and specific
+- For verse references, use standard format: `Book Chapter:Verse` (e.g., `John 3:16`, `Gen 1:1-3`)
+- Adjust steps based on complexity (simple = 3-4, complex = 5-7)
+- Always include original language tools for exegetical questions
+- The final report should **integrate** findings, not concatenate outputs
+- If a tool returns thin results, **refine the input** and retry before moving on

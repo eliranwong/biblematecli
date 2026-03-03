@@ -1,4 +1,4 @@
-from agentmake.main import AGENTMAKE_USER_DIR
+from agentmake import AGENTMAKE_USER_DIR
 from agentmake.utils.system import getCliOutput
 from prompt_toolkit.validation import Validator, ValidationError
 from biblemate import config

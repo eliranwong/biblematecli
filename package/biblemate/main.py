@@ -418,13 +418,13 @@ async def main_async():
                     return ""
                 generated_title_output = ""
                 generated_title = ""
-                async def run_prompt_engineering():
+                async def run_generate_title():
                     nonlocal generated_title_output, generated_title
                     generated_title_output = agentmake(original_request, system=get_system_generate_title(), **AGENTMAKE_CONFIG)
                     if generated_title_output:
                         generated_title = generated_title_output[-1].get("content", "").strip().replace("Title: ", "")
                 try:
-                    await thinking(run_prompt_engineering, "Generating a title ...")
+                    await thinking(run_generate_title, "Generating a title ...")
                     if not generated_title_output:
                         display_cancel_message(console)
                 except (KeyboardInterrupt, asyncio.CancelledError):

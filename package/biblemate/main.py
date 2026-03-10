@@ -60,7 +60,10 @@ config.backend = args.backend if args.backend else os.getenv("DEFAULT_AI_BACKEND
 config.model = args.model if args.model else "gemini-2.5-flash" if not args.backend and not os.getenv("DEFAULT_AI_BACKEND") else None
 with open(CONFIG_FILE_BACKUP, "a", encoding="utf-8") as fileObj:
     fileObj.write(f'''\nconfig.backend="{config.backend}"''')
-    fileObj.write(f'''\nconfig.model="{config.model}"''')
+    if config.model is None:
+        fileObj.write(f'''\nconfig.model=None''')
+    else:
+        fileObj.write(f'''\nconfig.model="{config.model}"''')
 
 AGENTMAKE_ENV_PATH = os.path.join(AGENTMAKE_USER_DIR, "agentmake.env")
 if config.backend == "googleai" and not os.getenv("GOOGLEAI_API_KEY"):

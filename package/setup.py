@@ -2,7 +2,7 @@ from setuptools import setup
 from setuptools.command.install import install
 import os, shutil, platform, sys
 
-version = "0.2.76"
+version = "0.2.77"
 with open(os.path.join("biblemate", "version.txt"), "w", encoding="utf-8") as fileObj:
     fileObj.write(version)
 
@@ -35,7 +35,7 @@ open(os.path.join(package, "config.py"), "w").close()
 setup(
     name=package,
     version=version,
-    python_requires=">=3.10, <3.13",
+    python_requires=">=3.10",
     description=f"BibleMate AI - Automate Your Bible Study",
     long_description=long_description,
     author="Eliran Wong",
@@ -69,7 +69,7 @@ setup(
     license="GNU General Public License (GPL)",
     install_requires=install_requires,
     extras_require={
-        'genai': ["google-genai>=1.46.0"],  # Dependencies for running Vertex AI
+        'genai': ["google-genai>=2.9.0"],  # 2.9+ declares Python 3.14 support
     },
     entry_points={
         "console_scripts": [
@@ -111,11 +111,10 @@ setup(
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        #'Programming Language :: Python :: 3.8',
-        #'Programming Language :: Python :: 3.9',
-        # currently, fastmcp supports 3.10-3.12
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
     ],
 )

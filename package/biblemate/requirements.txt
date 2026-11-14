@@ -1,5 +1,5 @@
-agentmake>=1.2.20
-agentmakemcp>=0.0.8
+agentmake>=1.2.24
+agentmakemcp>=0.0.10
 fastmcp[cli]
 rich
 alive-progress
